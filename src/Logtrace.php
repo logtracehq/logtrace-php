@@ -7,14 +7,12 @@ namespace Logtrace;
 class Logtrace
 {
     private string $apiKey;
-    private string $baseURL;
 
     private const DEFAULT_BASE_URL = 'https://api.logtracehq.com/v1/developers';
 
-    public function __construct(string $apiKey, string $baseURL = self::DEFAULT_BASE_URL)
+    public function __construct(string $apiKey)
     {
         $this->apiKey = $apiKey;
-        $this->baseURL = $baseURL;
     }
 
     /**
@@ -78,7 +76,7 @@ class Logtrace
     {
         $payload = json_encode(array_filter($body, fn($v) => $v !== null), JSON_THROW_ON_ERROR);
 
-        $ch = curl_init($this->baseURL . $path);
+        $ch = curl_init(self::DEFAULT_BASE_URL . $path);
 
         if ($ch === false) {
             throw new LogtraceException(0, 'Failed to initialize cURL');
