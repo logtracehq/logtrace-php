@@ -12,5 +12,8 @@
     "psr-4": {
       "Logtrace\\": "src/"
     }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.0"
   }
 }
