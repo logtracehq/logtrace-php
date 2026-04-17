@@ -28,7 +28,8 @@ class Logtrace
      *   username?: string,
      *   http_endpoint?: string,
      *   type?: string,
-     *   geo_ip_location?: string
+     *   geo_ip_location?: string,
+     *   metadata?: array<string, mixed>
      * } $params
      */
     public function createEvent(array $params): APIResponse
@@ -41,12 +42,14 @@ class Logtrace
      *
      * @param array{
      *   login_at: string,
-     *   status: 'ACTIVE'|'INACTIVE',
+     *   status: 'ACTIVE'|'INACTIVE'|'SUCCESSFUL'|'FAILED'|'EXPIRED',
      *   user_id?: string,
      *   username?: string,
      *   device_info?: string,
      *   ip_address?: string,
-     *   location?: string
+     *   location?: string,
+     *   token?: string,
+     *   metadata?: array<string, mixed>
      * } $params
      */
     public function createSession(array $params): APIResponse
@@ -64,7 +67,7 @@ class Logtrace
      *   username?: string,
      *   ip_address?: string,
      *   request_id?: string,
-     *   metadata?: array{event?: string, type?: string, description?: string}
+     *   metadata?: array<string, mixed>
      * } $params
      */
     public function createAuditLog(array $params): APIResponse
