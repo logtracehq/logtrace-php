@@ -46,9 +46,3 @@ $client->createAuditLog([
     ],
 ]);
 ```
-
-## Custom Base URL
-
-```php
-$client = new Logtrace('your-api-key', 'https://your-instance.com/v1/developers');
-```
