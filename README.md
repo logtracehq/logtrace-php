@@ -61,13 +61,3 @@ try {
     echo $e->getMessage();
 }
 ```
-
-## Options
-
-```php
-new Client(
-    apiKey:         getenv('LOGTRACE_API_KEY'),
-    baseUrl:        'https://api.logtrace.dev/v1/developers', // default: http://localhost:8080/v1/developers
-    timeoutSeconds: 5,                                        // default: 10
-);
-```
