@@ -1,48 +1,73 @@
-# logtrace-sdk
+# logtrace-php
 
-PHP SDK for the [Logtrace](https://logtracehq.com) developer API.
+PHP client for the Logtrace API. Requires PHP ≥ 8.1.
 
 ## Install
 
 ```bash
-composer require logtracehq/logtrace-sdk
+composer require logtrace/logtrace-php
 ```
 
 ## Usage
 
 ```php
-<?php
+use Logtrace\Client;
+use Logtrace\CreateEventRequest;
 
-use Logtrace\Logtrace;
+$client = new Client(getenv('LOGTRACE_API_KEY'));
 
-$client = new Logtrace('your-api-key');
+$client->createEvent(new CreateEventRequest(
+    actionName:      'user.signup',
+    httpMethod:      'POST',
+    httpStatus:      201,
+    clientIp:        '203.0.113.42',
+    clientUserAgent: $_SERVER['HTTP_USER_AGENT'] ?? '',
+));
 
-// Create an event
-$client->createEvent([
-    'action_name' => 'user.login',
-    'username' => 'jane_doe',
-    'http_method' => 'POST',
-    'http_status' => '200',
-    'client_ip' => '192.168.1.1',
-    'client_user_agent' => 'Mozilla/5.0',
-]);
+$client->createSession(new CreateSessionRequest(...));
+$client->createAuditLog(new CreateAuditLogRequest(...));
+```
 
-// Create a session
-$client->createSession([
-    'login_at' => date('c'),
-    'status' => 'ACTIVE',
-    'username' => 'jane_doe',
-]);
+## PSR-15 middleware
 
-// Create an audit log
-$client->createAuditLog([
-    'action' => 'user.deleted',
-    'timestamp' => date('c'),
-    'username' => 'jane_doe',
-    'metadata' => [
-        'event' => 'deletion',
-        'type' => 'user',
-        'description' => 'User account was deleted',
-    ],
-]);
+Automatically attaches request context (IP, method, endpoint, headers, status code) to every call made inside a handler.
+
+```php
+use Logtrace\Middleware;
+
+$app->add(new Middleware($client));
+```
+
+Inside any handler:
+
+```php
+$rc = $request->getAttribute(Middleware::ATTRIBUTE);
+
+$rc->createEvent(new CreateEventRequest(
+    actionName: 'order.placed',
+    // ...
+));
+```
+
+## Error handling
+
+```php
+use Logtrace\LogtraceException;
+
+try {
+    $client->createEvent($req);
+} catch (LogtraceException $e) {
+    echo $e->statusCode; // HTTP status
+    echo $e->getMessage();
+}
+```
+
+## Options
+
+```php
+new Client(
+    apiKey:         getenv('LOGTRACE_API_KEY'),
+    baseUrl:        'https://api.logtrace.dev/v1/developers', // default: http://localhost:8080/v1/developers
+    timeoutSeconds: 5,                                        // default: 10
+);
 ```
