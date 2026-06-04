@@ -21,13 +21,12 @@ final class Client
      */
     public function __construct(
         private readonly string $apiKey,
-        string $baseUrl        = self::DEFAULT_BASE_URL,
         int    $timeoutSeconds = self::DEFAULT_TIMEOUT_S,
     ) {
         if ($apiKey === '') {
             throw new \InvalidArgumentException('logtrace: API key is required');
         }
-        $this->baseUrl        = rtrim($baseUrl, '/');
+        $this->baseUrl        = self::DEFAULT_BASE_URL;
         $this->timeoutSeconds = $timeoutSeconds;
     }
 
