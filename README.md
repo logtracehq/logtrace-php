@@ -18,10 +18,8 @@ $client = new Client(getenv('LOGTRACE_API_KEY'));
 
 $client->createEvent(new CreateEventRequest(
     actionName:      'user.signup',
-    httpMethod:      'POST',
-    httpStatus:      201,
-    clientIp:        '203.0.113.42',
-    clientUserAgent: $_SERVER['HTTP_USER_AGENT'] ?? '',
+    userId:          '123',
+    metadata:        ['plan' => 'pro'],
 ));
 
 $client->createSession(new CreateSessionRequest(...));
