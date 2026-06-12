@@ -38,19 +38,19 @@ final class RequestClient
 
     public function createEvent(CreateEventRequest $req): ApiResponse
     {
-        $req->requestDetails = $this->buildRequestDetails();
+        $req->request_details = $this->buildRequestDetails();
         return $this->client->createEvent($req);
     }
 
     public function createSession(CreateSessionRequest $req): ApiResponse
     {
-        $req->requestDetails = $this->buildRequestDetails();
+        $req->request_details = $this->buildRequestDetails();
         return $this->client->createSession($req);
     }
 
     public function createAuditLog(CreateAuditLogRequest $req): ApiResponse
     {
-        $req->requestDetails = $this->buildRequestDetails();
+        $req->request_details = $this->buildRequestDetails();
         return $this->client->createAuditLog($req);
     }
 
@@ -65,7 +65,7 @@ final class RequestClient
             httpMethod:      $this->method,
             httpEndpoint:    $this->endpoint,
             httpStatusCode:  $status,
-            ipAddress:       $this->clientIp,
+            ip_address:       $this->clientIp,
             operatingSystem: $this->operatingSystem,
             clientUserAgent: $this->userAgent,
             requestHeaders:  $this->headers,

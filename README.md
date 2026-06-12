@@ -17,8 +17,8 @@ use Logtrace\CreateEventRequest;
 $client = new Client(getenv('LOGTRACE_API_KEY'));
 
 $client->createEvent(new CreateEventRequest(
-    actionName:      'user.signup',
-    userId:          '123',
+    name:      'user.signup',
+    user_id:          '123',
     metadata:        ['plan' => 'pro'],
 ));
 
@@ -42,7 +42,7 @@ Inside any handler:
 $rc = $request->getAttribute(Middleware::ATTRIBUTE);
 
 $rc->createEvent(new CreateEventRequest(
-    actionName: 'order.placed',
+    name: 'order.placed',
     // ...
 ));
 ```

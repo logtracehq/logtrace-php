@@ -16,13 +16,13 @@ final class RequestDetails
         public readonly string $httpMethod,
         public readonly string $httpEndpoint,
         public readonly int    $httpStatusCode,
-        public readonly string $ipAddress,
+        public readonly string $ip_address,
         public readonly string $operatingSystem,
         public readonly string $clientUserAgent,
         /** @var array<string, string> */
         public readonly array  $requestHeaders  = [],
         public readonly string $geoIpLocation   = '',
-        public readonly string $requestDuration = '',
+        public readonly string $tim = '',
         public readonly string $requestId       = '',
     ) {}
 
@@ -34,7 +34,7 @@ final class RequestDetails
             'http_method'      => $this->httpMethod,
             'http_endpoint'    => $this->httpEndpoint,
             'http_status_code' => $this->httpStatusCode,
-            'ip_address'       => $this->ipAddress,
+            'ip_address'       => $this->ip_address,
             'operating_system' => $this->operatingSystem,
             'client_user_agent'=> $this->clientUserAgent,
             'request_headers'  => $this->requestHeaders,
@@ -47,19 +47,19 @@ final class RequestDetails
 
 final class CreateEventRequest
 {
-    public ?RequestDetails $requestDetails = null;
+    public ?RequestDetails $request_details = null;
 
     /**
      * @param array<string, mixed> $metadata
      */
     public function __construct(
-        public readonly string $actionName,
+        public readonly string $name,
         public readonly string $httpMethod,
         public readonly int    $httpStatus,
         public readonly string $clientIp,
         public readonly string $clientUserAgent,
         public readonly string $userId       = '',
-        public readonly string $userName     = '',
+        public readonly string $username     = '',
         public readonly string $httpEndpoint = '',
         public readonly string $type         = '',
         public readonly string $geoIpLocation= '',
@@ -70,7 +70,7 @@ final class CreateEventRequest
     public function toArray(): array
     {
         $data = [
-            'action_name'       => $this->actionName,
+            'name'       => $this->name,
             'http_method'       => $this->httpMethod,
             'http_status'       => $this->httpStatus,
             'client_ip'         => $this->clientIp,
@@ -78,13 +78,13 @@ final class CreateEventRequest
         ];
 
         if ($this->userId)        $data['user_id']         = $this->userId;
-        if ($this->userName)      $data['username']        = $this->userName;
+        if ($this->username)      $data['username']        = $this->username;
         if ($this->httpEndpoint)  $data['http_endpoint']   = $this->httpEndpoint;
         if ($this->type)          $data['type']            = $this->type;
         if ($this->geoIpLocation) $data['geo_ip_location'] = $this->geoIpLocation;
         if ($this->metadata)      $data['metadata']        = $this->metadata;
-        if ($this->requestDetails !== null) {
-            $data['request_details'] = $this->requestDetails->toArray();
+        if ($this->request_details !== null) {
+            $data['request_details'] = $this->request_details->toArray();
         }
 
         return $data;
@@ -93,7 +93,7 @@ final class CreateEventRequest
 
 final class CreateSessionRequest
 {
-    public ?RequestDetails $requestDetails = null;
+    public ?RequestDetails $request_details = null;
 
     /**
      * @param array<string, mixed> $metadata
@@ -102,9 +102,9 @@ final class CreateSessionRequest
         public readonly string $loginAt,
         public readonly string $status,
         public readonly string $userId     = '',
-        public readonly string $userName   = '',
+        public readonly string $username   = '',
         public readonly string $deviceInfo = '',
-        public readonly string $ipAddress  = '',
+        public readonly string $ip_address  = '',
         public readonly string $location   = '',
         public readonly string $token      = '',
         public readonly array  $metadata   = [],
@@ -119,14 +119,14 @@ final class CreateSessionRequest
         ];
 
         if ($this->userId)     $data['user_id']    = $this->userId;
-        if ($this->userName)   $data['username']   = $this->userName;
+        if ($this->username)   $data['username']   = $this->username;
         if ($this->deviceInfo) $data['device_info']= $this->deviceInfo;
-        if ($this->ipAddress)  $data['ip_address'] = $this->ipAddress;
+        if ($this->ip_address)  $data['ip_address'] = $this->ip_address;
         if ($this->location)   $data['location']   = $this->location;
         if ($this->token)      $data['token']       = $this->token;
         if ($this->metadata)   $data['metadata']   = $this->metadata;
-        if ($this->requestDetails !== null) {
-            $data['request_details'] = $this->requestDetails->toArray();
+        if ($this->request_details !== null) {
+            $data['request_details'] = $this->request_details->toArray();
         }
 
         return $data;
@@ -135,17 +135,17 @@ final class CreateSessionRequest
 
 final class CreateAuditLogRequest
 {
-    public ?RequestDetails $requestDetails = null;
+    public ?RequestDetails $request_details = null;
 
     /**
      * @param array<string, mixed> $metadata
      */
     public function __construct(
-        public readonly string $action,
+        public readonly string $name,
         public readonly string $timestamp,
         public readonly string $userId    = '',
-        public readonly string $userName  = '',
-        public readonly string $ipAddress = '',
+        public readonly string $username  = '',
+        public readonly string $ip_address = '',
         public readonly string $requestId = '',
         public readonly array  $metadata  = [],
     ) {}
@@ -154,17 +154,17 @@ final class CreateAuditLogRequest
     public function toArray(): array
     {
         $data = [
-            'action'    => $this->action,
+            'name'    => $this->name,
             'timestamp' => $this->timestamp,
         ];
 
         if ($this->userId)    $data['user_id']    = $this->userId;
-        if ($this->userName)  $data['username']   = $this->userName;
-        if ($this->ipAddress) $data['ip_address'] = $this->ipAddress;
+        if ($this->username)  $data['username']   = $this->username;
+        if ($this->ip_address) $data['ip_address'] = $this->ip_address;
         if ($this->requestId) $data['request_id'] = $this->requestId;
         if ($this->metadata)  $data['metadata']   = $this->metadata;
-        if ($this->requestDetails !== null) {
-            $data['request_details'] = $this->requestDetails->toArray();
+        if ($this->request_details !== null) {
+            $data['request_details'] = $this->request_details->toArray();
         }
 
         return $data;
