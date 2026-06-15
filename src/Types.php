@@ -58,7 +58,7 @@ final class CreateEventRequest
         public readonly int    $httpStatus,
         public readonly string $clientIp,
         public readonly string $clientUserAgent,
-        public readonly string $userId       = '',
+        public readonly string $user_id       = '',
         public readonly string $username     = '',
         public readonly string $httpEndpoint = '',
         public readonly string $type         = '',
@@ -77,7 +77,7 @@ final class CreateEventRequest
             'client_user_agent' => $this->clientUserAgent,
         ];
 
-        if ($this->userId)        $data['user_id']         = $this->userId;
+        if ($this->user_id)        $data['user_id']         = $this->user_id;
         if ($this->username)      $data['username']        = $this->username;
         if ($this->httpEndpoint)  $data['http_endpoint']   = $this->httpEndpoint;
         if ($this->type)          $data['type']            = $this->type;
@@ -99,11 +99,10 @@ final class CreateSessionRequest
      * @param array<string, mixed> $metadata
      */
     public function __construct(
-        public readonly string $loginAt,
+        public readonly string $login_at,
         public readonly string $status,
-        public readonly string $userId     = '',
+        public readonly string $user_id     = '',
         public readonly string $username   = '',
-        public readonly string $deviceInfo = '',
         public readonly string $ip_address  = '',
         public readonly string $location   = '',
         public readonly string $token      = '',
@@ -114,13 +113,12 @@ final class CreateSessionRequest
     public function toArray(): array
     {
         $data = [
-            'login_at' => $this->loginAt,
+            'login_at' => $this->login_at,
             'status'   => $this->status,
         ];
 
-        if ($this->userId)     $data['user_id']    = $this->userId;
+        if ($this->user_id)     $data['user_id']    = $this->user_id;
         if ($this->username)   $data['username']   = $this->username;
-        if ($this->deviceInfo) $data['device_info']= $this->deviceInfo;
         if ($this->ip_address)  $data['ip_address'] = $this->ip_address;
         if ($this->location)   $data['location']   = $this->location;
         if ($this->token)      $data['token']       = $this->token;
@@ -143,7 +141,7 @@ final class CreateAuditLogRequest
     public function __construct(
         public readonly string $name,
         public readonly string $timestamp,
-        public readonly string $userId    = '',
+        public readonly string $user_id    = '',
         public readonly string $username  = '',
         public readonly string $ip_address = '',
         public readonly string $requestId = '',
@@ -158,7 +156,7 @@ final class CreateAuditLogRequest
             'timestamp' => $this->timestamp,
         ];
 
-        if ($this->userId)    $data['user_id']    = $this->userId;
+        if ($this->user_id)    $data['user_id']    = $this->user_id;
         if ($this->username)  $data['username']   = $this->username;
         if ($this->ip_address) $data['ip_address'] = $this->ip_address;
         if ($this->requestId) $data['request_id'] = $this->requestId;
